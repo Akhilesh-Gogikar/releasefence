@@ -1,0 +1,3 @@
+[submodule "private-example"]
+  path = vendor/private-example
+  url = ssh://git@source.example.internal/private-example.git

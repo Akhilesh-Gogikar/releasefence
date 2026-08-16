@@ -13,3 +13,6 @@ target/
 *.log
 .tmp/
 .cache/
+.codesight/
+report.json
+report.html
