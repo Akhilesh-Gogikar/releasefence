@@ -262,23 +262,23 @@ def html_text(report: dict[str, object]) -> str:
         fact = finding["fact"]
         fid = html.escape(str(finding["id"]))
         rows.append(
-            f'<article class="finding {html.escape(str(finding["severity"]))}" id="{fid}">'
-            f'<h3><a href="#{fid}">{fid}</a> · {html.escape(str(finding["title"]))}</h3>'
+            f'<article class="finding {html.escape(str(finding["severity"]))}" id="{fid}" aria-labelledby="{fid}-title">'
+            f'<h3 id="{fid}-title"><a href="#{fid}">{fid}</a> · {html.escape(str(finding["title"]))}</h3>'
             f'<p><strong>{html.escape(str(finding["severity"]).upper())}</strong> · '
             f'<code>{html.escape(str(fact["path"]))}:{fact["line"]}</code></p>'
-            f'<pre>{html.escape(str(fact["evidence"]))}</pre>'
+            f'<pre><code>{html.escape(str(fact["evidence"]))}</code></pre>'
             f'<p>{html.escape(str(finding["remediation"]))}</p></article>'
         )
     summary = report["summary"]
     return """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ReleaseFence report</title><style>
-body{font:16px system-ui,sans-serif;max-width:960px;margin:2rem auto;padding:0 1rem;color:#17202a}code,pre{background:#f4f6f7;padding:.2rem .35rem;overflow:auto}.finding{border-left:.45rem solid #85929e;padding:.5rem 1rem;margin:1rem 0;background:#fafafa}.critical{border-color:#922b21}.error{border-color:#cb4335}.warning{border-color:#d4ac0d}.info{border-color:#2874a6}a{color:inherit}dt{font-weight:700}
-</style></head><body><main><h1>ReleaseFence report</h1>
-<p><strong>Status: """ + html.escape(str(report["status"]).upper()) + f"""</strong></p>
+body{font:16px/1.5 system-ui,sans-serif;max-width:960px;margin:2rem auto;padding:0 1rem;color:#17202a;background:#fff}code,pre{background:#f1f3f4;padding:.2rem .35rem;overflow:auto}.finding{border-left:.45rem solid #59636e;padding:.5rem 1rem;margin:1rem 0;background:#fafafa}.critical{border-color:#7b241c}.error{border-color:#a93226}.warning{border-color:#8a6d00}.info{border-color:#1f618d}a{color:#174f78}.skip-link{position:absolute;left:-10000px;top:auto}.skip-link:focus{left:1rem;top:1rem;background:#fff;padding:.5rem;z-index:1}a:focus-visible{outline:3px solid #6c3483;outline-offset:3px}@media(forced-colors:active){.finding{border-left-color:CanvasText}}
+</style></head><body><a class="skip-link" href="#content">Skip to report content</a><header><h1>ReleaseFence report</h1></header><main id="content">
+<p role="status" aria-label="Overall release status"><strong>Status: """ + html.escape(str(report["status"]).upper()) + f"""</strong></p>
 <p>{summary['critical']} critical · {summary['error']} error · {summary['warning']} warning · {summary['info']} info</p>
 <p>This is an explainable local preflight, not legal advice or legal clearance.</p>
-<section><h2>Findings</h2>""" + ("".join(rows) if rows else "<p>No boundary findings.</p>") + """</section></main></body></html>
+<section aria-labelledby="findings-heading"><h2 id="findings-heading">Findings</h2>""" + ("".join(rows) if rows else "<p>No boundary findings.</p>") + """</section></main></body></html>
 """
 
 
@@ -292,6 +292,7 @@ def _write_atomic(path: Path, content: str) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="releasefence", description=__doc__)
+    parser.add_argument("--version", action="version", version=f"%(prog)s {VERSION}")
     subparsers = parser.add_subparsers(dest="command", required=True)
     scan = subparsers.add_parser("scan", help="scan a local repository")
     scan.add_argument("repository", type=Path)

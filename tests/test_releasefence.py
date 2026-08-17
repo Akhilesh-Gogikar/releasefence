@@ -50,6 +50,9 @@ class ReleaseFenceTests(unittest.TestCase):
                 {"license-conflict", "private-registry", "internal-url", "submodule-lineage", "binary-file", "provenance-missing"}.issubset(rules)
             )
             rendered = releasefence.html_text(report)
+            self.assertIn('class="skip-link"', rendered)
+            self.assertIn('<main id="content">', rendered)
+            self.assertNotIn("<script", rendered.lower())
             for finding in report["findings"]:
                 self.assertIn(f'id="{finding["id"]}"', rendered)
                 self.assertIn(f'href="#{finding["id"]}"', rendered)
@@ -70,6 +73,16 @@ class ReleaseFenceTests(unittest.TestCase):
             self.assertEqual(0, result.returncode, result.stderr)
             self.assertEqual("green", json.loads(json_path.read_text(encoding="utf-8"))["status"])
             self.assertIn("ReleaseFence report", html_path.read_text(encoding="utf-8"))
+
+    def test_top_level_version_does_not_require_a_subcommand(self):
+        result = subprocess.run(
+            [sys.executable, str(ROOT / "releasefence.py"), "--version"],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual("releasefence 0.1.0\n", result.stdout)
 
 
 if __name__ == "__main__":

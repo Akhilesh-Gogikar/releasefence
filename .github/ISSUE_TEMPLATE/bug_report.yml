@@ -1,0 +1,42 @@
+name: Bug report
+description: Report incorrect ReleaseFence behavior using synthetic evidence
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Do not include private repository data, credentials, or sensitive endpoints. Security issues belong in a private advisory."
+  - type: input
+    id: version
+    attributes:
+      label: ReleaseFence version
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options: ["Linux", "macOS", "Windows"]
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal synthetic reproduction
+      description: Include commands and a synthetic file tree only.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual result
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: I removed private, partner, customer, and credential data.
+          required: true

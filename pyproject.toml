@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "releasefence"
+version = "0.1.0"
+description = "Explainable local boundary checks before an OSS release"
+readme = "README.md"
+requires-python = ">=3.10,<3.15"
+license = "MIT"
+authors = [{name = "Akhilesh Gogikar"}]
+keywords = ["open-source", "release", "provenance", "audit"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/akigogikar/releasefence"
+Issues = "https://github.com/akigogikar/releasefence/issues"
+Documentation = "https://github.com/akigogikar/releasefence/tree/main/docs"
+
+[project.scripts]
+releasefence = "releasefence:main"
+
+[tool.setuptools]
+py-modules = ["releasefence"]

@@ -1,0 +1,33 @@
+name: Feature request
+description: Propose a narrow, explainable local check or report improvement
+title: "feature: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Release-boundary problem
+      description: What local fact is currently missed?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Proposed evidence and false-positive controls
+      description: Explain path/line evidence, severity, remediation, and synthetic proof.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and alternatives
+      description: Explain why existing local tools or a documentation change are insufficient.
+    validations:
+      required: true
+  - type: checkboxes
+    id: cleanroom
+    attributes:
+      label: Clean-room confirmation
+      options:
+        - label: This proposal contains only public specifications and synthetic examples.
+          required: true

@@ -21,3 +21,5 @@ This repository must remain independently developed from public sources and synt
 | 2026-08-16 | Git documentation: gitmodules and git-config, https://git-scm.com/docs/ | Public formats for submodule and remote configuration | GPLv2 documentation terms | Parser is an original bounded heuristic |
 | 2026-08-16 | Git LFS specification v1, https://github.com/git-lfs/git-lfs/blob/main/docs/spec.md | Recognize the public pointer marker | Repository license/terms | Synthetic pointer contains no real object |
 | 2026-08-16 | Original synthetic green/amber/red trees | Tests and demonstration | Original synthetic data | No private, partner, or customer inputs |
+| 2026-08-17 | MIT License, https://opensource.org/license/mit | Repository license text and packaging metadata | MIT | Exact standard text with owner-requested copyright line |
+| 2026-08-17 | Original project governance, community, workflow, packaging, and documentation text | DevRel launch-readiness baseline | Original work under repository license | Tailored to ReleaseFence scope; no private or partner material |
