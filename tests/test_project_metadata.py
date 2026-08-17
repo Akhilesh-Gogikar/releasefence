@@ -15,7 +15,7 @@ class ProjectMetadataTests(unittest.TestCase):
             "LICENSE", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "SECURITY.md", "SUPPORT.md",
             "GOVERNANCE.md", "ROADMAP.md", "CHANGELOG.md", "ECOSYSTEM.md", "docs/ARCHITECTURE.md",
             "docs/TROUBLESHOOTING.md", "docs/API_STABILITY.md", "docs/PRIVACY.md", "docs/ACCESSIBILITY.md",
-            "docs/LAUNCH_KIT.md", ".github/dependabot.yml", ".github/workflows/ci.yml",
+            "docs/LAUNCH_KIT.md", "docs/ISSUE_SEEDS.md", ".github/dependabot.yml", ".github/workflows/ci.yml",
             ".github/workflows/release.yml", ".github/pull_request_template.md",
             ".github/CODEOWNERS",
         }
@@ -58,6 +58,12 @@ class ProjectMetadataTests(unittest.TestCase):
         for tool in tools:
             self.assertIn(f"https://github.com/akigogikar/{tool}", text)
         self.assertIn("optional and informational", text)
+
+    def test_issue_seeds_are_actionable(self):
+        text = (ROOT / "docs/ISSUE_SEEDS.md").read_text(encoding="utf-8")
+        self.assertEqual(5, text.count("**Proposed title:**"))
+        for field in ("**Labels:**", "**Rationale:**", "**Acceptance criteria:**", "**Test plan:**", "**Skills:**", "**Estimated scope:**", "**Likely files:**"):
+            self.assertEqual(5, text.count(field), field)
 
 
 if __name__ == "__main__":

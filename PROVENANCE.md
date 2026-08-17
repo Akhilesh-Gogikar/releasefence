@@ -23,3 +23,4 @@ This repository must remain independently developed from public sources and synt
 | 2026-08-16 | Original synthetic green/amber/red trees | Tests and demonstration | Original synthetic data | No private, partner, or customer inputs |
 | 2026-08-17 | MIT License, https://opensource.org/license/mit | Repository license text and packaging metadata | MIT | Exact standard text with owner-requested copyright line |
 | 2026-08-17 | Original project governance, community, workflow, packaging, and documentation text | DevRel launch-readiness baseline | Original work under repository license | Tailored to ReleaseFence scope; no private or partner material |
+| 2026-08-17 | Locally authored deterministic social-preview SVG | Repository preview and README identity | Original work under this repository’s MIT License | No external logos, fonts, screenshots, adoption claims, or partner assets; adjacent PNG is rendered from the SVG |

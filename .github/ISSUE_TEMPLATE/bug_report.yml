@@ -13,6 +13,13 @@ body:
       placeholder: "0.1.0"
     validations:
       required: true
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+      placeholder: "python3 --version"
+    validations:
+      required: true
   - type: dropdown
     id: platform
     attributes:
@@ -33,10 +40,22 @@ body:
       label: Expected and actual result
     validations:
       required: true
+  - type: input
+    id: rule
+    attributes:
+      label: Finding rule or ID
+      description: If applicable, copy only the non-sensitive rule name or stable finding ID.
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Redacted diagnostics
+      description: Include exit code and relevant output, replacing sensitive paths/endpoints with synthetic values.
   - type: checkboxes
     id: safety
     attributes:
       label: Safety check
       options:
         - label: I removed private, partner, customer, and credential data.
+          required: true
+        - label: I checked the current troubleshooting guide and issue seeds.
           required: true

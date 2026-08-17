@@ -24,6 +24,23 @@ body:
       description: Explain why existing local tools or a documentation change are insufficient.
     validations:
       required: true
+  - type: textarea
+    id: success
+    attributes:
+      label: Acceptance criteria and test plan
+      description: List observable completion conditions and the smallest synthetic fixture that proves them.
+    validations:
+      required: true
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: Contribution intent
+      options:
+        - I can open a pull request after design agreement
+        - I can help test or review
+        - I am proposing the idea only
+    validations:
+      required: true
   - type: checkboxes
     id: cleanroom
     attributes:
