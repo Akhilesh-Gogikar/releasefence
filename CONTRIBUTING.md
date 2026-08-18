@@ -9,7 +9,7 @@ ReleaseFence is intentionally narrow: local, explainable boundary checks with de
 3. **Format steward — JSON, HTML, CLI, or packaging.** Preserve deterministic output, schema/exit-code compatibility, accessibility, and zero runtime dependencies.
 4. **Reviewer — sustained project care.** Contributors who repeatedly ship accurate, constructive work may be invited to triage or review. Commit access is never automatic.
 
-The current [issue seeds](docs/ISSUE_SEEDS.md) show concrete work at each level. Comment with your proposed approach before starting a multi-day item; assignment is a coordination signal, not ownership of the idea.
+The [live ready-for-contribution issues](https://github.com/akigogikar/releasefence/issues?q=is%3Aissue+is%3Aopen+label%3A%22status%3A+ready%22) show work available now; [issue seeds](docs/ISSUE_SEEDS.md) preserve design context. Comment with your proposed approach before starting a multi-day item; assignment is a coordination signal, not ownership of the idea.
 
 ## Before opening a change
 
@@ -24,10 +24,10 @@ Use Python 3.10–3.14 and standard-library runtime code.
 
 ```sh
 python3 -m unittest discover -s tests -v
-python3 releasefence.py scan examples/green --json /tmp/releasefence.json --html /tmp/releasefence.html
+python3 releasefence.py scan examples/green --json .tmp/releasefence.json --html .tmp/releasefence.html
 ```
 
-Keep JSON deterministic, HTML script-free, and findings linked to a stable path/line fact. Non-trivial behavior needs one focused test.
+Keep JSON deterministic, HTML script-free, and findings linked to a stable repository-relative fact. Non-trivial behavior needs one focused test.
 
 ## Triage and review expectations
 

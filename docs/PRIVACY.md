@@ -2,7 +2,7 @@
 
 ReleaseFence is local-only. It does not make network requests, send telemetry, load remote assets, or persist a database.
 
-The scanner reads the selected tree, plus `.git/config`, and writes only the requested JSON/HTML paths. Reports can contain repository-relative filenames, configuration fragments, endpoints, symlink targets, and other evidence. Treat reports as at least as sensitive as the inspected repository.
+The scanner reads the selected tree, plus a real in-tree `.git/config`, and writes only the requested JSON/HTML paths. It does not follow a symlinked `.git`. URL user information, recognized sensitive query/fragment values, and absolute symlink targets are redacted, but reports can still contain repository-relative filenames, configuration fragments, endpoints, relative symlink targets, and other evidence. Treat reports as at least as sensitive as the inspected repository.
 
 Recommended practice:
 

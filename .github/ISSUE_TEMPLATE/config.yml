@@ -6,6 +6,6 @@ contact_links:
   - name: Support and troubleshooting
     url: https://github.com/akigogikar/releasefence/blob/main/SUPPORT.md
     about: Check support boundaries and common diagnostics before filing.
-  - name: Contributor issue seeds
-    url: https://github.com/akigogikar/releasefence/blob/main/docs/ISSUE_SEEDS.md
-    about: Start with one of five scoped, code-aware contributions.
+  - name: Ready contribution issues
+    url: https://github.com/akigogikar/releasefence/issues?q=is%3Aissue+is%3Aopen+label%3A%22status%3A+ready%22
+    about: Find a live, scoped issue that is ready for a contributor.

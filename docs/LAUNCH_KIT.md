@@ -1,14 +1,14 @@
 # Launch kit
 
-Use this only after the owner approves public visibility and every launch-day gate below passes. Copy describes 0.1.0 as it exists; do not add adoption, performance, or legal-clearance claims.
+Use this only after the owner approves public visibility and every launch-day gate below passes. The current `main` is a 0.1.1.dev0 development snapshot; creating a 0.1.1 tag is a separate approval. Do not post release copy while the development suffix remains, and do not add adoption, performance, or legal-clearance claims.
 
 ## Positioning
 
 **One line:** Know what crosses the boundary before your repository does.
 
-**Short:** ReleaseFence is a local, evidence-first preflight for open-source repository review. It produces deterministic JSON and accessible static HTML without uploading the tree.
+**Short:** ReleaseFence is a local, evidence-first preflight for open-source repository review. It produces deterministic JSON and accessibility-minded, script-free static HTML without uploading the tree.
 
-**Differentiators:** local-only operation, stable path/line evidence instead of an opaque score, one view across several release boundaries, and synthetic green/amber/red examples anyone can reproduce.
+**Differentiators:** local-only operation, stable repository-relative evidence instead of an opaque score, one view across several release boundaries, and synthetic green/amber/red examples anyone can reproduce.
 
 ## Three-minute demo script
 
@@ -31,13 +31,13 @@ Use this only after the owner approves public visibility and every launch-day ga
 
 **Title:** Show HN: ReleaseFence – local, explainable checks before open-sourcing a repo
 
-**Text:** I built ReleaseFence because release review often means checking several boundaries in separate places. The 0.1 CLI stays local and produces deterministic JSON plus script-free HTML. Every finding includes a path, line, evidence, severity, and remediation. It checks a deliberately bounded set: license declarations, provenance, internal URLs/registries/remotes, submodules/symlinks, binaries, large files, and LFS. It is not legal clearance or a secret scanner. The repo includes green/amber/red synthetic examples; I would value feedback on false positives and missing evidence.
+**Text:** I built ReleaseFence because release review often means checking several boundaries in separate places. The 0.1 CLI stays local and produces deterministic JSON plus script-free HTML. Every finding includes a repository-relative location, evidence, severity, and remediation. It checks a deliberately bounded set: license declarations, provenance, internal URLs/registries/remotes, submodules/symlinks, binaries, large files, and LFS. It is not legal clearance or a secret scanner. The repo includes green/amber/red synthetic examples; I would value feedback on false positives and missing evidence.
 
 ### Reddit
 
 **Title:** I made a local, evidence-first preflight for reviewing a repo before open-sourcing it
 
-**Body:** ReleaseFence 0.1 runs entirely on a local checkout and creates deterministic JSON and accessible static HTML. It does not upload source or claim a repository is safe to publish. I included three synthetic examples so the behavior is reproducible. I am looking for concrete false-positive cases, report usability feedback, and small contributions to the scoped issue seeds.
+**Body:** ReleaseFence 0.1 runs entirely on a local checkout and creates deterministic JSON and accessibility-minded, script-free static HTML. It does not upload source or claim a repository is safe to publish. I included three synthetic examples so the behavior is reproducible. I am looking for concrete false-positive cases, report usability feedback, and small contributions to the live ready-for-contribution issues.
 
 ### LinkedIn
 
@@ -45,11 +45,11 @@ Before a repository becomes open source, the hard question is often not “did o
 
 ### X
 
-ReleaseFence 0.1 is a local, evidence-first preflight before open-sourcing a repo: deterministic JSON + script-free HTML, with path/line evidence for every finding. No uploads, opaque score, or legal-clearance claim. Includes reproducible green/amber/red demos.
+ReleaseFence 0.1 is a local, evidence-first preflight before open-sourcing a repo: deterministic JSON + script-free HTML, with repository-relative evidence for every finding. No uploads, opaque score, or legal-clearance claim. Includes reproducible green/amber/red demos.
 
 ## FAQ
 
-**Does green mean a repository is safe to publish?** No. It means the implemented heuristics produced no warning-or-higher finding for that tree.
+**Does green mean a repository is safe to publish?** No. It means the implemented heuristics produced no warning-or-higher finding for the scanned tree; choose a clean checkout or release export deliberately because ignored descendants are included.
 
 **Does it upload or phone home?** No. The scanner makes no network requests; reports are local files that may still contain sensitive evidence.
 
@@ -57,15 +57,15 @@ ReleaseFence 0.1 is a local, evidence-first preflight before open-sourcing a rep
 
 **Why deterministic output?** It makes review diffs and CI behavior easier to reproduce. Absolute checkout paths and generation timestamps are excluded.
 
-**How should I contribute?** Start with a synthetic reproduction and one of the [issue seeds](ISSUE_SEEDS.md). New rules must define evidence, severity, false-positive controls, and remediation.
+**How should I contribute?** Start with a synthetic reproduction and a [live ready-for-contribution issue](https://github.com/akigogikar/releasefence/issues?q=is%3Aissue+is%3Aopen+label%3A%22status%3A+ready%22); [issue seeds](ISSUE_SEEDS.md) retain design context. New rules must define evidence, severity, false-positive controls, and remediation.
 
 ## Launch-day checklist
 
 - [ ] Public visibility explicitly approved after ownership, license, trademark, provenance, privacy, and security review.
 - [ ] CI green on the documented Python/platform matrix; pinned actions and least-privilege permissions rechecked.
-- [ ] Tag, version, changelog, install metadata, and demo output agree on 0.1.0.
+- [ ] Tag, version, changelog, install metadata, and demo output agree on the separately approved release; `.dev0` is absent from posted release copy.
 - [ ] Green/amber/red JSON and HTML reviewed for accuracy, keyboard use, contrast, and screen-reader structure.
-- [ ] Security advisory, issue forms, contributor links, and five issue seeds work from a signed-out view.
+- [ ] Security advisory, issue forms, contributor links, and live ready-for-contribution issues work from a signed-out view.
 - [ ] Run launch copy against README claims; remove any claim not directly demonstrated.
 - [ ] Reserve time to answer technical questions and correct documentation without arguing with valid criticism.
 
@@ -87,4 +87,4 @@ ReleaseFence 0.1 is a local, evidence-first preflight before open-sourcing a rep
 
 ## Ethical cross-promotion
 
-Cross-link only the seven related OSS tools named in ECOSYSTEM.md, and only where a link answers the reader's next technical question. Links stay optional, disclosed, and outside runtime output. Commercial products require exact owner-approved names, URLs, relationship wording, and trademark or partner permission before inclusion.
+Name only the seven related OSS tools in ECOSYSTEM.md, and activate a repository link only after that destination is public and answers the reader's next technical question. Links stay optional, disclosed, and outside runtime output. Commercial products require exact owner-approved names, URLs, relationship wording, and trademark or partner permission before inclusion.

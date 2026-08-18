@@ -33,7 +33,7 @@ class ProjectMetadataTests(unittest.TestCase):
         self.assertIn('"3.14"', ci_workflow)
         self.assertEqual(5, ci_workflow.count("os: ubuntu-latest"))
         self.assertEqual(1, ci_workflow.count("os: macos-latest"))
-        self.assertEqual(1, ci_workflow.count("os: windows-latest"))
+        self.assertEqual(2, ci_workflow.count("os: windows-latest"))
         self.assertIn("fail-fast: false", ci_workflow)
         self.assertIn("name: Python ${{ matrix.python }} on ${{ matrix.os }}", ci_workflow)
         self.assertIn('"3.14"', release_workflow)
@@ -56,7 +56,10 @@ class ProjectMetadataTests(unittest.TestCase):
         text = (ROOT / "ECOSYSTEM.md").read_text(encoding="utf-8")
         tools = {"releasefence", "semver-weather", "reviewbus", "sdk-wirediff", "tokenflame", "mcp-client-autopsy", "directivegraph"}
         for tool in tools:
-            self.assertIn(f"https://github.com/akigogikar/{tool}", text)
+            self.assertIn(tool, text)
+        self.assertIn("https://github.com/akigogikar/releasefence", text)
+        for tool in tools - {"releasefence"}:
+            self.assertNotIn(f"https://github.com/akigogikar/{tool}", text)
         self.assertIn("optional and informational", text)
 
     def test_issue_seeds_are_actionable(self):

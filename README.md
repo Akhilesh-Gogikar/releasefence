@@ -7,9 +7,9 @@
 
 **Know what crosses the boundary before your repository does.**
 
-ReleaseFence is a local preflight for teams preparing a repository for open-source review. It turns release-boundary risks into deterministic JSON and a self-contained HTML report with the exact path, line, evidence, severity, and remediation behind every finding.
+ReleaseFence is a local preflight for teams preparing a repository for open-source review. It turns release-boundary risks into deterministic JSON and a self-contained HTML report with a repository-relative location, evidence, severity, and remediation for every finding.
 
-**Status:** 0.1.0 alpha. Source installation is supported; no package registry publication has occurred. A clean report is useful evidence, not legal advice, ownership proof, secret discovery, or permission to publish.
+**Status:** 0.1.1.dev0 alpha development snapshot on `main`; the immutable `v0.1.0` tag remains the latest release. Source installation is supported; no package registry publication has occurred. A clean report is useful evidence, not legal advice, ownership proof, secret discovery, or permission to publish.
 
 ## Why ReleaseFence
 
@@ -51,11 +51,11 @@ Expected statuses are green, amber, and red respectively.
 
 ## Help shape 0.2
 
-The best first contributions are small improvements to a rule, fixture, diagnostic, or accessibility check—not new infrastructure. Start with the five code-aware [issue seeds](docs/ISSUE_SEEDS.md), then read [CONTRIBUTING.md](CONTRIBUTING.md). A focused 2–4 hour contribution with a synthetic proof is welcome.
+The best first contributions are small improvements to a rule, fixture, diagnostic, or accessibility check—not new infrastructure. Start with the [live ready-for-contribution issues](https://github.com/akigogikar/releasefence/issues?q=is%3Aissue+is%3Aopen+label%3A%22status%3A+ready%22); [issue seeds](docs/ISSUE_SEEDS.md) preserve their design context. Then read [CONTRIBUTING.md](CONTRIBUTING.md). A focused 2–4 hour contribution with a synthetic proof is welcome.
 
 ## Install and support
 
-ReleaseFence supports Python 3.10–3.14 and has no runtime dependencies. CI tests every supported Python version on Linux and Python 3.14 on macOS and Windows.
+ReleaseFence supports Python 3.10–3.14 and has no runtime dependencies. CI tests every supported Python version on Linux, Python 3.14 on macOS, and Python 3.10 plus 3.14 on Windows.
 
 - Questions and false positives: [support](SUPPORT.md) and [troubleshooting](docs/TROUBLESHOOTING.md)
 - Vulnerabilities or sensitive findings: [private security reporting](SECURITY.md)
@@ -76,6 +76,8 @@ python3 -m unittest discover -s tests -v
 
 ## Honest limitations
 
-License recognition and URL classification are bounded heuristics. Text inspection stops at 2 MB per file; binaries and larger files are flagged rather than decoded. ReleaseFence does not determine copyright ownership, contractual restrictions, patent risk, credential leakage, or remote repository visibility. Human ownership, legal, security, accessibility, and contractual review remain necessary.
+License recognition and URL classification are bounded heuristics. Text inspection stops at 2 MB per regular file; binaries and larger files are flagged rather than decoded, and unreadable or special filesystem entries are surfaced without being opened. The scanner visits all descendants except `.git` internals, including ignored and generated files, so use a clean, stable checkout or release export when that is the intended boundary. Concurrent filesystem changes produce an incomplete-scan error rather than a snapshot. Scanning this project root is intentionally red because its synthetic tests and `examples/red` contain findings; the three example directories are the supported demo.
+
+ReleaseFence does not determine copyright ownership, contractual restrictions, patent risk, credential leakage, or remote repository visibility. Human ownership, legal, security, accessibility, and contractual review remain necessary.
 
 Released under the [MIT License](LICENSE).

@@ -19,3 +19,7 @@ The v0 detector is conservative. Confirm the exact path/line evidence, replace e
 ## A binary is flagged
 
 ReleaseFence does not decode binaries. Record its origin and generation method or replace it with reproducible source. Git LFS pointers also require the referenced object to be reviewed independently.
+
+## Scanning the ReleaseFence root reports red
+
+That is expected in 0.1. The repository contains intentionally red synthetic fixtures and detector strings in its tests. Use `examples/green`, `examples/amber`, and `examples/red` for the documented demo; do not present a root scan as a self-audit. For another project, scan a clean checkout or release export because ignored and generated descendants are included.

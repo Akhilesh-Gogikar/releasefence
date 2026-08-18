@@ -4,14 +4,14 @@ This roadmap communicates scope and sequencing, not delivery dates. Accuracy, pr
 
 ## Shipped in 0.1
 
-- Deterministic JSON and accessible static HTML.
+- Deterministic JSON and accessibility-minded, script-free static HTML.
 - Explainable license, provenance, remote, registry, URL, submodule, symlink, binary, large-file, and LFS boundary checks.
 - Synthetic green, amber, and red examples plus installable CLI packaging.
 
 ## Next: evidence quality for 0.2
 
 - Recognize more supported manifest license forms without pretending to perform legal analysis.
-- Make skipped/unreadable file accounting explicit.
+- Add aggregate inspected/skipped byte and reason summaries without duplicating the visible incomplete-scan findings.
 - Add a local, versioned exception format whose applied exceptions remain visible in reports.
 - Improve SPDX-expression comparison and document its ceiling.
 
@@ -20,7 +20,7 @@ These map directly to [issue seeds 1–3 and 5](docs/ISSUE_SEEDS.md). Small fixt
 ## Explore after the evidence model holds
 
 - SARIF export that preserves stable IDs, local facts, and remediation.
-- Clear repository-size budgets and skipped-file summaries.
+- Clear repository-size and runtime budgets for predictable local scans.
 - A migration path for any schema/rule-ID changes informed by public feedback.
 
 See [issue seed 4](docs/ISSUE_SEEDS.md) for the export design boundary. Exploration does not promise inclusion.

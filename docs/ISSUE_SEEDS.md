@@ -1,6 +1,6 @@
 # Issue seeds
 
-These are ready-to-file proposals, not promises. Confirm the code still matches each seed before creating the issue. Use synthetic fixtures only.
+These mirror the five seeded GitHub issues and preserve their design context; the [live ready-for-contribution list](https://github.com/akigogikar/releasefence/issues?q=is%3Aissue+is%3Aopen+label%3A%22status%3A+ready%22) is authoritative for assignment and status. Confirm the code still matches each seed before contributing. Use synthetic fixtures only.
 
 ## 1. Recognize PEP 621 license table declarations
 
@@ -16,17 +16,17 @@ These are ready-to-file proposals, not promises. Confirm the code still matches 
 
 **Skills:** beginner Python, regular expressions, TOML familiarity. **Estimated scope:** 2–4 hours. **Likely files:** `releasefence.py`, `tests/test_releasefence.py`, `docs/API_STABILITY.md`, `PROVENANCE.md`.
 
-## 2. Account for unreadable or skipped files
+## 2. Summarize inspected and skipped coverage
 
-**Proposed title:** `Report skipped and unreadable files in the ReleaseFence summary`
+**Proposed title:** `Summarize inspected and skipped coverage in ReleaseFence reports`
 
 **Labels:** `good first issue`, `help wanted`, `reporting`
 
-**Rationale:** `_read_text()` returns `None` for several causes, but the final report does not distinguish a binary from an unreadable or size-skipped text candidate. Reviewers need to know what was not inspected.
+**Rationale:** Individual unreadable directories/files and special entries are now visible findings, while binary and large-file rules explain their own limits. Reviewers still lack a compact aggregate of how many files and bytes were fully inspected, sampled, or skipped.
 
-**Acceptance criteria:** add deterministic skipped-file counts/reasons without leaking absolute paths; avoid duplicate findings with existing binary/large-file rules; render the count in JSON and HTML; document schema impact.
+**Acceptance criteria:** add deterministic inspected/sampled/skipped file and byte totals without leaking absolute paths; group reasons without duplicating existing findings; render the totals in JSON and HTML; document schema impact.
 
-**Test plan:** use temporary unreadable, oversized, binary, and invalid-UTF-8 files; skip permission assertions where the platform cannot enforce them; verify stable JSON ordering and accessible HTML text.
+**Test plan:** use temporary unreadable, special, oversized, binary, and invalid-UTF-8 files; skip permission assertions where the platform cannot enforce them; verify totals, stable JSON ordering, and accessibility-minded HTML text.
 
 **Skills:** Python filesystem APIs, cross-platform testing, report design. **Estimated scope:** 4–8 hours. **Likely files:** `releasefence.py`, `tests/test_releasefence.py`, `docs/ARCHITECTURE.md`, `docs/API_STABILITY.md`.
 
