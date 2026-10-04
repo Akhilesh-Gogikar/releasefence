@@ -25,9 +25,9 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/akigogikar/releasefence"
-Issues = "https://github.com/akigogikar/releasefence/issues"
-Documentation = "https://github.com/akigogikar/releasefence/tree/main/docs"
+Homepage = "https://github.com/Akhilesh-Gogikar/releasefence"
+Issues = "https://github.com/Akhilesh-Gogikar/releasefence/issues"
+Documentation = "https://github.com/Akhilesh-Gogikar/releasefence/tree/main/docs"
 
 [project.scripts]
 releasefence = "releasefence:main"

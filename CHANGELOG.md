@@ -28,4 +28,4 @@ Target: 0.1.1. This section is not a release or tag.
 - License/manifest, provenance, remote/registry, internal URL, submodule/symlink, binary, large-file, and Git LFS checks.
 - Synthetic green, amber, and red examples and standard-library tests.
 
-[0.1.0]: https://github.com/akigogikar/releasefence/releases/tag/v0.1.0
+[0.1.0]: https://github.com/Akhilesh-Gogikar/releasefence/releases/tag/v0.1.0

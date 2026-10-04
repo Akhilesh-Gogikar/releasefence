@@ -6,6 +6,6 @@ Examples of unacceptable behavior include personal attacks, intimidation, sexual
 
 Maintainers may edit or remove contributions, pause discussions, or restrict participation when necessary to protect the community. Enforcement decisions should be proportionate, documented privately, and avoid public shaming.
 
-Report conduct concerns privately through a verified contact method on the maintainer profile at <https://github.com/akigogikar>. Include only the minimum information needed; do not disclose secrets or sensitive repository contents. Security vulnerabilities use the separate route in [SECURITY.md](SECURITY.md).
+Report conduct concerns privately through a verified contact method on the maintainer profile at <https://github.com/Akhilesh-Gogikar>. Include only the minimum information needed; do not disclose secrets or sensitive repository contents. Security vulnerabilities use the separate route in [SECURITY.md](SECURITY.md).
 
 This policy applies in repository spaces and when someone represents the project in public.

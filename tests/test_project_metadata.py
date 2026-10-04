@@ -27,7 +27,7 @@ class ProjectMetadataTests(unittest.TestCase):
         self.assertRegex(metadata, r"(?m)^dependencies = \[\]$")
         self.assertRegex(metadata, r'(?m)^license = "MIT"$')
         self.assertRegex(metadata, r'(?m)^releasefence = "releasefence:main"$')
-        self.assertEqual("* @akigogikar\n", (ROOT / ".github/CODEOWNERS").read_text(encoding="utf-8"))
+        self.assertEqual("* @Akhilesh-Gogikar\n", (ROOT / ".github/CODEOWNERS").read_text(encoding="utf-8"))
         release_workflow = (ROOT / ".github/workflows/release.yml").read_text(encoding="utf-8")
         ci_workflow = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
         self.assertIn('"3.14"', ci_workflow)
@@ -57,9 +57,9 @@ class ProjectMetadataTests(unittest.TestCase):
         tools = {"releasefence", "semver-weather", "reviewbus", "sdk-wirediff", "tokenflame", "mcp-client-autopsy", "directivegraph"}
         for tool in tools:
             self.assertIn(tool, text)
-        self.assertIn("https://github.com/akigogikar/releasefence", text)
+        self.assertIn("https://github.com/Akhilesh-Gogikar/releasefence", text)
         for tool in tools - {"releasefence"}:
-            self.assertNotIn(f"https://github.com/akigogikar/{tool}", text)
+            self.assertNotIn(f"https://github.com/Akhilesh-Gogikar/{tool}", text)
         self.assertIn("optional and informational", text)
 
     def test_issue_seeds_are_actionable(self):

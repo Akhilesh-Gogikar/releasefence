@@ -57,7 +57,7 @@ ReleaseFence 0.1 is a local, evidence-first preflight before open-sourcing a rep
 
 **Why deterministic output?** It makes review diffs and CI behavior easier to reproduce. Absolute checkout paths and generation timestamps are excluded.
 
-**How should I contribute?** Start with a synthetic reproduction and a [live ready-for-contribution issue](https://github.com/akigogikar/releasefence/issues?q=is%3Aissue+is%3Aopen+label%3A%22status%3A+ready%22); [issue seeds](ISSUE_SEEDS.md) retain design context. New rules must define evidence, severity, false-positive controls, and remediation.
+**How should I contribute?** Start with a synthetic reproduction and a [live ready-for-contribution issue](https://github.com/Akhilesh-Gogikar/releasefence/issues?q=is%3Aissue+is%3Aopen+label%3A%22status%3A+ready%22); [issue seeds](ISSUE_SEEDS.md) retain design context. New rules must define evidence, severity, false-positive controls, and remediation.
 
 ## Launch-day checklist
 

@@ -1,7 +1,7 @@
 # ReleaseFence
 
-[![CI](https://github.com/akigogikar/releasefence/actions/workflows/ci.yml/badge.svg)](https://github.com/akigogikar/releasefence/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/github/license/akigogikar/releasefence)](LICENSE)
+[![CI](https://github.com/Akhilesh-Gogikar/releasefence/actions/workflows/ci.yml/badge.svg)](https://github.com/Akhilesh-Gogikar/releasefence/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/github/license/Akhilesh-Gogikar/releasefence)](LICENSE)
 
 ![ReleaseFence social preview: a release gate and evidence-first repository preflight message](docs/assets/social-preview.png)
 
@@ -21,7 +21,7 @@ ReleaseFence is a local preflight for teams preparing a repository for open-sour
 ## Copy-paste demo
 
 ```sh
-git clone https://github.com/akigogikar/releasefence.git
+git clone https://github.com/Akhilesh-Gogikar/releasefence.git
 cd releasefence
 python3 -m venv .venv
 . .venv/bin/activate
@@ -51,7 +51,7 @@ Expected statuses are green, amber, and red respectively.
 
 ## Help shape 0.2
 
-The best first contributions are small improvements to a rule, fixture, diagnostic, or accessibility check—not new infrastructure. Start with the [live ready-for-contribution issues](https://github.com/akigogikar/releasefence/issues?q=is%3Aissue+is%3Aopen+label%3A%22status%3A+ready%22); [issue seeds](docs/ISSUE_SEEDS.md) preserve their design context. Then read [CONTRIBUTING.md](CONTRIBUTING.md). A focused 2–4 hour contribution with a synthetic proof is welcome.
+The best first contributions are small improvements to a rule, fixture, diagnostic, or accessibility check—not new infrastructure. Start with the [live ready-for-contribution issues](https://github.com/Akhilesh-Gogikar/releasefence/issues?q=is%3Aissue+is%3Aopen+label%3A%22status%3A+ready%22); [issue seeds](docs/ISSUE_SEEDS.md) preserve their design context. Then read [CONTRIBUTING.md](CONTRIBUTING.md). A focused 2–4 hour contribution with a synthetic proof is welcome.
 
 ## Install and support
 

@@ -1,6 +1,6 @@
 # Issue seeds
 
-These mirror the five seeded GitHub issues and preserve their design context; the [live ready-for-contribution list](https://github.com/akigogikar/releasefence/issues?q=is%3Aissue+is%3Aopen+label%3A%22status%3A+ready%22) is authoritative for assignment and status. Confirm the code still matches each seed before contributing. Use synthetic fixtures only.
+These mirror the five seeded GitHub issues and preserve their design context; the [live ready-for-contribution list](https://github.com/Akhilesh-Gogikar/releasefence/issues?q=is%3Aissue+is%3Aopen+label%3A%22status%3A+ready%22) is authoritative for assignment and status. Confirm the code still matches each seed before contributing. Use synthetic fixtures only.
 
 ## 1. Recognize PEP 621 license table declarations
 
