@@ -130,7 +130,8 @@ def _file_kind(mode: int) -> str:
 
 
 def _symlink_evidence(target: str) -> str:
-    if os.path.isabs(target) or re.match(r"^[A-Za-z]:[\\/]", target) or target.startswith(("\\\\", "//")):
+    # Not os.path.isabs: on Windows, Python 3.13+ no longer treats "/x" or "\x" as absolute.
+    if target.startswith(("/", "\\")) or re.match(r"^[A-Za-z]:[\\/]", target):
         return "[absolute target redacted]"
     return target.replace("\\", "/")
 

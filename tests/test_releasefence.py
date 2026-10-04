@@ -381,7 +381,7 @@ class ReleaseFenceTests(unittest.TestCase):
         self.assertIn("[absolute target redacted]", reports[0])
 
     def test_cross_platform_absolute_targets_and_reparse_points_are_redacted(self):
-        for target in (r"C:\Users\alice\secret", r"\\server\share\secret", "/Users/alice/secret"):
+        for target in (r"C:\Users\alice\secret", r"\\server\share\secret", "/Users/alice/secret", r"\Users\alice\secret"):
             self.assertEqual("[absolute target redacted]", releasefence._symlink_evidence(target))
         path = mock.Mock()
         path.lstat.return_value = SimpleNamespace(st_mode=stat.S_IFDIR, st_file_attributes=0x400)
