@@ -61,6 +61,13 @@ class ProjectMetadataTests(unittest.TestCase):
         self.assertEqual(len(public), len(entries))
         self.assertEqual(public, set(re.findall(r"github\.com/Akhilesh-Gogikar/([a-z0-9-]+)", text)))
         self.assertIn("optional and informational", text)
+        # No other document may link an owner repository outside the allowlist either.
+        linked = set()
+        for document in ROOT.rglob("*.md"):
+            if ".git" not in document.parts:
+                found = re.findall(r"github\.com/Akhilesh-Gogikar/([\w.-]+)", document.read_text(encoding="utf-8"), re.I)
+                linked.update(name.lower().removesuffix(".git") for name in found)
+        self.assertLessEqual(linked, public)
 
     def test_no_tracked_file_uses_the_git_lfs_filter(self):
         # Synthetic LFS pointers must not match an LFS rule, or `git clone` fails wherever Git LFS is installed.
