@@ -1,4 +1,5 @@
 import re
+import subprocess
 import sys
 import unittest
 from pathlib import Path
@@ -60,6 +61,15 @@ class ProjectMetadataTests(unittest.TestCase):
         self.assertEqual(len(public), len(entries))
         self.assertEqual(public, set(re.findall(r"github\.com/Akhilesh-Gogikar/([a-z0-9-]+)", text)))
         self.assertIn("optional and informational", text)
+
+    def test_no_tracked_file_uses_the_git_lfs_filter(self):
+        # Synthetic LFS pointers must not match an LFS rule, or `git clone` fails wherever Git LFS is installed.
+        files = subprocess.run(["git", "ls-files", "-z"], cwd=ROOT, capture_output=True, check=False)
+        if files.returncode != 0:
+            self.skipTest("not a git checkout")
+        attributes = subprocess.run(["git", "check-attr", "-z", "--stdin", "filter"], cwd=ROOT, input=files.stdout, capture_output=True, check=True)
+        fields = attributes.stdout.split(b"\0")
+        self.assertEqual([], [path for path, value in zip(fields[0::3], fields[2::3]) if value == b"lfs"])
 
     def test_issue_seeds_are_actionable(self):
         text = (ROOT / "docs/ISSUE_SEEDS.md").read_text(encoding="utf-8")
