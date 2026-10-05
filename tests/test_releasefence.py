@@ -281,6 +281,15 @@ class ReleaseFenceTests(unittest.TestCase):
             self.assertIn("token=[redacted]", rendered)
             self.assertNotIn("hunter2", rendered)
 
+    def test_backtick_wrapped_urls_are_reported_without_the_backtick(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.make_green(root)
+            (root / "README.md").write_text("Call `https://build.internal` or `http://10.0.0.5`.\n", encoding="utf-8")
+            report = releasefence.scan_repository(root)
+            internal = {item["fact"]["evidence"]: item["severity"] for item in report["findings"] if item["rule"] == "internal-url"}
+            self.assertEqual({"https://build.internal": "critical", "http://10.0.0.5": "critical"}, internal)
+
     def test_git_directory_symlink_is_not_followed(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
