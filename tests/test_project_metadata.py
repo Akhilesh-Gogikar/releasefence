@@ -54,10 +54,11 @@ class ProjectMetadataTests(unittest.TestCase):
 
     def test_ecosystem_is_complete_and_informational(self):
         text = (ROOT / "ECOSYSTEM.md").read_text(encoding="utf-8")
-        self.assertIn("https://github.com/Akhilesh-Gogikar/releasefence", text)
-        # Unreleased sibling tools must not be named until they are public.
-        for tool in ("semver-weather", "reviewbus", "sdk-wirediff", "tokenflame", "mcp-client-autopsy", "directivegraph"):
-            self.assertNotIn(tool, text)
+        # Allowlist: list and link only public tools, so unreleased siblings stay unnamed.
+        public = {"releasefence", "directivegraph"}
+        entries = [line for line in text.splitlines() if line.lstrip().startswith(("-", "*", "|"))]
+        self.assertEqual(len(public), len(entries))
+        self.assertEqual(public, set(re.findall(r"github\.com/Akhilesh-Gogikar/([a-z0-9-]+)", text)))
         self.assertIn("optional and informational", text)
 
     def test_issue_seeds_are_actionable(self):
