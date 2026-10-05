@@ -55,7 +55,7 @@ class ProjectMetadataTests(unittest.TestCase):
     def test_ecosystem_is_complete_and_informational(self):
         text = (ROOT / "ECOSYSTEM.md").read_text(encoding="utf-8")
         # Allowlist: list and link only public tools, so unreleased siblings stay unnamed.
-        public = {"releasefence", "directivegraph"}
+        public = {"releasefence", "directivegraph", "reviewbus", "sdk-wirediff"}
         entries = [line for line in text.splitlines() if line.lstrip().startswith(("-", "*", "|"))]
         self.assertEqual(len(public), len(entries))
         self.assertEqual(public, set(re.findall(r"github\.com/Akhilesh-Gogikar/([a-z0-9-]+)", text)))
