@@ -20,7 +20,7 @@ VERSION = "0.1.1"
 SEVERITY = {"info": 0, "warning": 1, "error": 2, "critical": 3}
 PUBLIC_REGISTRIES = {"registry.npmjs.org", "pypi.org", "files.pythonhosted.org", "crates.io"}
 PUBLIC_GIT_HOSTS = {"github.com", "gitlab.com", "bitbucket.org", "codeberg.org"}
-URL_RE = re.compile(r"(?:https?|ssh|git)://[^\s<>\"')]+|[A-Za-z0-9._~+-]+@[A-Za-z0-9._-]+:[^\s<>\"')\]]+", re.I)
+URL_RE = re.compile(r"(?:https?|ssh|git)://[^\s<>\"')`]+|[A-Za-z0-9._~+-]+@[A-Za-z0-9._-]+:[^\s<>\"')\]`]+", re.I)
 SENSITIVE_QUERY_RE = re.compile(
     r"(?i)([?&#](?:[^=&#]*(?:token|secret|password|passwd|credential|signature|session)[^=&#]*|api[_-]?key|apikey|key|sig|auth)=)[^&#]*"
 )

@@ -12,6 +12,7 @@ All notable changes are recorded here. The project follows Semantic Versioning a
 ### Fixed
 
 - Write reports through existing devices and FIFOs such as `--json /dev/null` instead of failing or replacing them with a regular file.
+- Stop URL matches at a backtick, so a host-only internal URL in Markdown inline code or a JavaScript template literal is reported instead of missed, and URL evidence no longer carries the closing backtick.
 
 ## [0.1.1] - 2026-10-04
 
