@@ -19,6 +19,29 @@ MIT = "MIT License\n\nPermission is hereby granted, free of charge, to any perso
 
 
 class ReleaseFenceTests(unittest.TestCase):
+    def test_pyproject_license_tables_are_bounded_and_deterministic(self):
+        cases = [
+            ('license = "MIT"', None),
+            ('license = {text = "MIT"}', None),
+            ("license = { text = 'Apache-2.0' } # comment", "license-conflict"),
+            ('license = {file = "../outside-LICENSE"}', "license-unverified"),
+            ('license = {text = "MIT", file = "LICENSE"}', "manifest-invalid"),
+            ('license = {text = "MIT"', "manifest-invalid"),
+        ]
+        for declaration, expected in cases:
+            with self.subTest(declaration=declaration), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                self.make_green(root)
+                (root / "pyproject.toml").write_text("[project]\n" + declaration + "\n")
+                first = releasefence.scan_repository(root)
+                self.assertEqual(releasefence.json_text(first), releasefence.json_text(releasefence.scan_repository(root)))
+                rules = {item["rule"] for item in first["findings"]}
+                if expected:
+                    self.assertIn(expected, rules)
+                else:
+                    self.assertNotIn("license-conflict", rules)
+                    self.assertNotIn("manifest-invalid", rules)
+
     def make_green(self, root: Path) -> None:
         (root / "LICENSE").write_text(MIT, encoding="utf-8")
         (root / "package.json").write_text('{"license":"MIT","name":"synthetic"}\n', encoding="utf-8")

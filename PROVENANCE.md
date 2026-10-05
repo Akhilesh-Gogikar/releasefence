@@ -14,6 +14,7 @@ This repository must remain independently developed from public sources and synt
 
 | Date | Source/version | Purpose | License or terms | Notes |
 |---|---|---|---|---|
+| 2026-10-05 | PEP 621, https://peps.python.org/pep-0621/ | Original text/file license-table shape and mutual exclusivity | Python documentation terms | Original bounded heuristic implementation and synthetic tests; no license-path reads or private inputs |
 | 2026-08-16 | Project brief derived from public-landscape research | Initial scope only | Owner's personal planning notes (not included) | No implementation or copied source |
 | 2026-08-16 | Python 3 standard-library documentation, https://docs.python.org/3/ | CLI, JSON, HTML escaping, URL parsing, filesystem implementation references | PSF License Version 2 | Implementation is original and uses only the standard library |
 | 2026-08-16 | SPDX License List, https://spdx.org/licenses/ | Public license-identifier conventions | SPDX legal terms | No license text copied into implementation |
