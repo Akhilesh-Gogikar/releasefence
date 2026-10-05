@@ -196,10 +196,23 @@ class ReleaseFenceTests(unittest.TestCase):
                 encoding="utf-8",
             )
             report = releasefence.scan_repository(root)
-            finding = next(item for item in report["findings"] if item["rule"] == "internal-url")
+            finding = next(item for item in report["findings"] if item["rule"] == "loopback-url")
             self.assertIn("http://[::1]/callback#access_token=[redacted]", finding["fact"]["evidence"])
             self.assertNotIn("hunter2", releasefence.json_text(report))
             self.assertEqual("git://[redacted]@example.com/repo", releasefence._redact_url("git://oauth-token@example.com/repo"))
+
+    def test_loopback_urls_are_info_while_private_hosts_stay_critical(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.make_green(root)
+            (root / "server.js").write_text(
+                "http://127.0.0.1:${port}/\nhttp://[::1]:8080/\nhttp://localhost:3000/\nhttp://10.0.0.5/\nhttps://build.internal/\n",
+                encoding="utf-8",
+            )
+            report = releasefence.scan_repository(root)
+            by_line = {item["fact"]["line"]: (item["rule"], item["severity"]) for item in report["findings"]}
+            loopback, internal = ("loopback-url", "info"), ("internal-url", "critical")
+            self.assertEqual({1: loopback, 2: loopback, 3: loopback, 4: internal, 5: internal}, by_line)
 
     def test_scp_style_git_credentials_are_redacted_and_classified(self):
         with tempfile.TemporaryDirectory() as directory:

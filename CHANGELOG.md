@@ -4,6 +4,10 @@ All notable changes are recorded here. The project follows Semantic Versioning a
 
 ## [Unreleased]
 
+### Changed
+
+- Report loopback URLs (`localhost`, `127.0.0.0/8`, `::1`) as `info`-level `loopback-url` findings instead of critical `internal-url` findings, so intentionally local-only servers no longer turn a report red. Private-network addresses and internal hostnames remain critical `internal-url` findings, and loopback Git remotes and submodule URLs are still flagged.
+
 ## [0.1.1] - 2026-10-04
 
 ### Fixed
