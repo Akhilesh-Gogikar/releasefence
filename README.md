@@ -9,7 +9,7 @@
 
 ReleaseFence is a local preflight for teams preparing a repository for open-source review. It turns release-boundary risks into deterministic JSON and a self-contained HTML report with a repository-relative location, evidence, severity, and remediation for every finding.
 
-**Status:** 0.1.1.dev0 alpha development snapshot on `main`; the immutable `v0.1.0` tag remains the latest release. Source installation is supported; no package registry publication has occurred. A clean report is useful evidence, not legal advice, ownership proof, secret discovery, or permission to publish.
+**Status:** 0.1.1 alpha. Source installation is supported; no package registry publication has occurred. A clean report is useful evidence, not legal advice, ownership proof, secret discovery, or permission to publish.
 
 ## Why ReleaseFence
 
@@ -64,9 +64,9 @@ ReleaseFence supports Python 3.10–3.14 and has no runtime dependencies. CI tes
 ## Project navigation
 
 - Design: [architecture](docs/ARCHITECTURE.md), [privacy](docs/PRIVACY.md), and [accessibility](docs/ACCESSIBILITY.md)
-- Direction: [roadmap](ROADMAP.md), [launch kit](docs/LAUNCH_KIT.md), and [governance](GOVERNANCE.md)
+- Direction: [roadmap](ROADMAP.md) and [governance](GOVERNANCE.md)
 - Participate: [contributing](CONTRIBUTING.md), [code of conduct](CODE_OF_CONDUCT.md), and [issue seeds](docs/ISSUE_SEEDS.md)
-- Boundaries: [scope](SCOPE.md), [provenance](PROVENANCE.md), and [optional ecosystem](ECOSYSTEM.md)
+- Boundaries: [scope](SCOPE.md) and [provenance](PROVENANCE.md)
 
 ## Test
 

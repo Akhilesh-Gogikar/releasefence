@@ -15,7 +15,7 @@ class ProjectMetadataTests(unittest.TestCase):
             "LICENSE", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "SECURITY.md", "SUPPORT.md",
             "GOVERNANCE.md", "ROADMAP.md", "CHANGELOG.md", "ECOSYSTEM.md", "docs/ARCHITECTURE.md",
             "docs/TROUBLESHOOTING.md", "docs/API_STABILITY.md", "docs/PRIVACY.md", "docs/ACCESSIBILITY.md",
-            "docs/LAUNCH_KIT.md", "docs/ISSUE_SEEDS.md", ".github/dependabot.yml", ".github/workflows/ci.yml",
+            "docs/ISSUE_SEEDS.md", ".github/dependabot.yml", ".github/workflows/ci.yml",
             ".github/workflows/release.yml", ".github/pull_request_template.md",
             ".github/CODEOWNERS",
         }
@@ -54,12 +54,10 @@ class ProjectMetadataTests(unittest.TestCase):
 
     def test_ecosystem_is_complete_and_informational(self):
         text = (ROOT / "ECOSYSTEM.md").read_text(encoding="utf-8")
-        tools = {"releasefence", "semver-weather", "reviewbus", "sdk-wirediff", "tokenflame", "mcp-client-autopsy", "directivegraph"}
-        for tool in tools:
-            self.assertIn(tool, text)
         self.assertIn("https://github.com/Akhilesh-Gogikar/releasefence", text)
-        for tool in tools - {"releasefence"}:
-            self.assertNotIn(f"https://github.com/Akhilesh-Gogikar/{tool}", text)
+        # Unreleased sibling tools must not be named until they are public.
+        for tool in ("semver-weather", "reviewbus", "sdk-wirediff", "tokenflame", "mcp-client-autopsy", "directivegraph"):
+            self.assertNotIn(tool, text)
         self.assertIn("optional and informational", text)
 
     def test_issue_seeds_are_actionable(self):

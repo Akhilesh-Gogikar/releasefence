@@ -471,7 +471,7 @@ class ReleaseFenceTests(unittest.TestCase):
             text=True,
         )
         self.assertEqual(0, result.returncode, result.stderr)
-        self.assertEqual("releasefence 0.1.1.dev0\n", result.stdout)
+        self.assertEqual("releasefence 0.1.1\n", result.stdout)
 
 
 if __name__ == "__main__":

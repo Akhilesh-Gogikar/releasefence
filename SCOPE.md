@@ -20,7 +20,7 @@ Founders have separate tools for licenses, secrets, dependencies, and security, 
 
 - No source, fixtures, prompts, traces, schemas, requirements, or examples from private company, partner, customer, or unpublished research repositories.
 - No customer or partner names, data, incidents, screenshots, or derived requirements.
-- No public release until ownership, license, trademark, security, and contractual reviews are recorded.
+- No public release until ownership, license, trademark, security, and contractual reviews are recorded (see the 2026-10-04 launch review in [PROVENANCE.md](PROVENANCE.md)).
 
 ## First proof gate
 

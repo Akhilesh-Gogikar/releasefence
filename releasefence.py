@@ -16,7 +16,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from urllib.parse import urlparse
 
-VERSION = "0.1.1.dev0"
+VERSION = "0.1.1"
 SEVERITY = {"info": 0, "warning": 1, "error": 2, "critical": 3}
 PUBLIC_REGISTRIES = {"registry.npmjs.org", "pypi.org", "files.pythonhosted.org", "crates.io"}
 PUBLIC_GIT_HOSTS = {"github.com", "gitlab.com", "bitbucket.org", "codeberg.org"}
