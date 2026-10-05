@@ -642,6 +642,15 @@ body{font:16px/1.5 system-ui,sans-serif;max-width:960px;margin:2rem auto;padding
 
 
 def _write_atomic(path: Path, content: str) -> None:
+    try:
+        special = not stat.S_ISREG(path.stat().st_mode)
+    except FileNotFoundError:
+        special = False
+    if special:
+        # Devices, FIFOs, and directories must never be replaced; write through them (or fail) instead.
+        with path.open("w", encoding="utf-8", newline="\n") as handle:
+            handle.write(content)
+        return
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = None
     try:

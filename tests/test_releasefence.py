@@ -423,6 +423,11 @@ class ReleaseFenceTests(unittest.TestCase):
                     releasefence._write_atomic(root / "report.json", "{}\n")
             self.assertFalse(temporary.exists())
 
+    def test_atomic_write_writes_through_special_files_without_replacing_them(self):
+        # Regression: `--json /dev/null` renamed a temporary file over the device (or failed with EPERM).
+        with mock.patch.object(releasefence.os, "replace", side_effect=AssertionError("replaced a special file")):
+            releasefence._write_atomic(Path(os.devnull), "{}\n")
+
     def test_cli_reports_output_errors_without_a_traceback(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
