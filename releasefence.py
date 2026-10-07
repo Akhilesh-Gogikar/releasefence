@@ -469,6 +469,34 @@ def _manifest_licenses(root: Path, texts: dict[Path, str], findings: list[Findin
         if text is None:
             continue
         for number, line in enumerate(text.splitlines(), 1):
+            if filename == "pyproject.toml" and (
+                re.match(r"\s*license\.(?:text|file)\s*=", line)
+                or re.fullmatch(r"\s*\[project\.license\]\s*(?:#.*)?", line)
+            ):
+                result.append((filename, "UNKNOWN", number))
+                findings.append(Finding("license-unverified", "warning", "License table requires manual review", filename, number, "Dotted-key or section license table is not parsed", "Review the declaration manually; this scanner does not parse these table forms or follow license paths."))
+                continue
+            if filename == "pyproject.toml" and re.match(r"\s*license\s*=\s*\{", line, re.I):
+                table = re.fullmatch(
+                    r"""\s*license\s*=\s*\{\s*(text|file)\s*=\s*("[^"\\]*"|'[^']*')\s*\}\s*(?:#.*)?""",
+                    line, re.I,
+                )
+                if table is None:
+                    findings.append(Finding("manifest-invalid", "warning", "License table requires manual review", filename, number, "Unsupported or malformed single-line license table", "Use one text or file key; review multiline and escaped declarations manually."))
+                elif table.group(1).lower() == "file":
+                    result.append((filename, "UNKNOWN", number))
+                    findings.append(Finding("license-unverified", "warning", "File-based license requires manual review", filename, number, "License declared through a file reference (not followed)", "Review the referenced license and its ownership; this scanner does not follow license paths."))
+                else:
+                    value = table.group(2)[1:-1].strip()
+                    identifier = _license_id(value)
+                    if identifier == "UNKNOWN" and re.fullmatch(r"[A-Za-z0-9.+-]+", value):
+                        identifier = value.upper()
+                    if identifier == "UNKNOWN" or not value:
+                        result.append((filename, "UNKNOWN", number))
+                        findings.append(Finding("license-unverified", "warning", "License text requires manual review", filename, number, "Unrecognized license text", "Review the license text; heuristic recognition is not legal clearance."))
+                    else:
+                        result.append((filename, identifier, number))
+                continue
             match = re.match(r"\s*license\s*=\s*[\"']([^\"']+)[\"']", line, re.I)
             if match:
                 result.append((filename, match.group(1).strip().upper(), number))
