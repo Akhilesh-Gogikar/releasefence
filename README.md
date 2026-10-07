@@ -66,7 +66,7 @@ ReleaseFence supports Python 3.10–3.14 and has no runtime dependencies. CI tes
 - Design: [architecture](docs/ARCHITECTURE.md), [privacy](docs/PRIVACY.md), and [accessibility](docs/ACCESSIBILITY.md)
 - Direction: [roadmap](ROADMAP.md) and [governance](GOVERNANCE.md)
 - Participate: [contributing](CONTRIBUTING.md), [code of conduct](CODE_OF_CONDUCT.md), and [issue seeds](docs/ISSUE_SEEDS.md)
-- Boundaries: [scope](SCOPE.md) and [provenance](PROVENANCE.md)
+- Boundaries: [scope](SCOPE.md), [provenance](PROVENANCE.md), and [optional ecosystem](ECOSYSTEM.md)
 
 ## Test
 

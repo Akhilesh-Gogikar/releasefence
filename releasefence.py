@@ -20,7 +20,7 @@ VERSION = "0.1.1"
 SEVERITY = {"info": 0, "warning": 1, "error": 2, "critical": 3}
 PUBLIC_REGISTRIES = {"registry.npmjs.org", "pypi.org", "files.pythonhosted.org", "crates.io"}
 PUBLIC_GIT_HOSTS = {"github.com", "gitlab.com", "bitbucket.org", "codeberg.org"}
-URL_RE = re.compile(r"(?:https?|ssh|git)://[^\s<>\"')]+|[A-Za-z0-9._~+-]+@[A-Za-z0-9._-]+:[^\s<>\"')\]]+", re.I)
+URL_RE = re.compile(r"(?:https?|ssh|git)://[^\s<>\"')`]+|[A-Za-z0-9._~+-]+@[A-Za-z0-9._-]+:[^\s<>\"')\]`]+", re.I)
 SENSITIVE_QUERY_RE = re.compile(
     r"(?i)([?&#](?:[^=&#]*(?:token|secret|password|passwd|credential|signature|session)[^=&#]*|api[_-]?key|apikey|key|sig|auth)=)[^&#]*"
 )
@@ -395,6 +395,15 @@ def _is_internal_host(host: str) -> bool:
         return "." not in host
 
 
+def _is_loopback_host(host: str) -> bool:
+    if host == "localhost":
+        return True
+    try:
+        return ipaddress.ip_address(host.strip("[]")).is_loopback
+    except ValueError:
+        return False
+
+
 def _redact_url(raw_url: str) -> str:
     redacted = raw_url
     if "://" not in redacted and "@" in redacted:
@@ -534,7 +543,9 @@ def _check_urls(root: Path, texts: dict[Path, str], findings: list[Finding]) -> 
             host = _host(raw)
             line = _line_for(text, match.start())
             evidence = _redact_url(raw)
-            if _is_internal_host(host):
+            if _is_loopback_host(host):
+                findings.append(Finding("loopback-url", "info", "Loopback URL stays on the local machine", rel, line, evidence, "Confirm the URL is an intentional local-only endpoint, such as a test or development server."))
+            elif _is_internal_host(host):
                 findings.append(Finding("internal-url", "critical", "Internal URL crosses the release boundary", rel, line, evidence, "Remove, redact, or replace the internal endpoint with a public synthetic example."))
             is_registry_config = path.name.casefold() in registry_names or rel.casefold() in {".cargo/config", ".cargo/config.toml"}
             if is_registry_config and host and host not in PUBLIC_REGISTRIES:
@@ -659,6 +670,15 @@ body{font:16px/1.5 system-ui,sans-serif;max-width:960px;margin:2rem auto;padding
 
 
 def _write_atomic(path: Path, content: str) -> None:
+    try:
+        special = not stat.S_ISREG(path.stat().st_mode)
+    except FileNotFoundError:
+        special = False
+    if special:
+        # Devices, FIFOs, and directories must never be replaced; write through them (or fail) instead.
+        with path.open("w", encoding="utf-8", newline="\n") as handle:
+            handle.write(content)
+        return
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = None
     try:

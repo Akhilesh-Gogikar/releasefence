@@ -4,9 +4,17 @@ All notable changes are recorded here. The project follows Semantic Versioning a
 
 ## [Unreleased]
 
+### Changed
+
+- Report loopback URLs (`localhost`, `127.0.0.0/8`, `::1`) as `info`-level `loopback-url` findings instead of critical `internal-url` findings, so intentionally local-only servers no longer turn a report red. Private-network addresses and internal hostnames remain critical `internal-url` findings, and loopback Git remotes and submodule URLs are still flagged.
+- List DirectiveGraph, ReviewBus, and SDK WireDiff in ECOSYSTEM.md now that they are public, guarded by an allowlist test that names no unreleased project.
+
 ### Fixed
 
 - Recognize bounded legacy pyproject license tables without hiding later string conflicts; warn for dotted-key and section forms and file references without opening declared paths.
+- Write reports through existing devices and FIFOs such as `--json /dev/null` instead of failing or replacing them with a regular file.
+- Stop URL matches at a backtick, so a host-only internal URL in Markdown inline code or a JavaScript template literal is reported instead of missed, and URL evidence no longer carries the closing backtick.
+- Clone and check out cleanly when Git LFS is installed: the red example's LFS rule no longer matches its synthetic pointer, which has no real LFS object.
 
 ## [0.1.1] - 2026-10-04
 
