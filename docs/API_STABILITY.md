@@ -2,7 +2,7 @@
 
 ReleaseFence 0.x is alpha software.
 
-License scanning supports simple string assignments and bounded single-line `pyproject.toml` license tables with exactly one `text` or `file` key. Text is recognized heuristically as a license marker or identifier; PEP 621 does not require it to be SPDX. File references are not followed and produce `license-unverified` manual-review warnings. Multiline, escaped, malformed or multi-key tables produce `manifest-invalid` manual-review warnings. No legal conclusion is implied.
+License scanning supports simple string assignments and bounded single-line `pyproject.toml` license tables with exactly one `text` or `file` key. Text is recognized heuristically as a license marker or identifier; the legacy PEP 621 form does not require it to be SPDX. Inline tables do not stop the scan before its first string assignment, preserving the existing first-string-declaration behavior. File references are not followed and produce `license-unverified` manual-review warnings, including references to root `LICENSE` or `COPYING` files already scanned independently. Dotted `license.text` / `license.file` keys and `[project.license]` headers are recognized but not parsed and produce `license-unverified` manual-review warnings. An inline `license = {` declaration that is multiline, escaped, malformed or multi-key produces `manifest-invalid`; arbitrary TOML spellings and multiline string contents are not fully parsed. No legal conclusion is implied.
 
 - CLI commands, exit meanings, rule identifiers, and JSON fields may change in a minor 0.x release when accuracy requires it.
 - `schema_version` changes when a consumer must adapt. Additive fields may appear without a schema bump during 0.x.

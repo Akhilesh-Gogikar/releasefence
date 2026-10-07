@@ -4,6 +4,10 @@ All notable changes are recorded here. The project follows Semantic Versioning a
 
 ## [Unreleased]
 
+### Fixed
+
+- Recognize bounded legacy pyproject license tables without hiding later string conflicts; warn for dotted-key and section forms and file references without opening declared paths.
+
 ## [0.1.1] - 2026-10-04
 
 ### Fixed

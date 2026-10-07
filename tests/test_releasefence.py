@@ -32,7 +32,7 @@ class ReleaseFenceTests(unittest.TestCase):
             with self.subTest(declaration=declaration), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
                 self.make_green(root)
-                (root / "pyproject.toml").write_text("[project]\n" + declaration + "\n")
+                (root / "pyproject.toml").write_text("[project]\n" + declaration + "\n", encoding="utf-8")
                 first = releasefence.scan_repository(root)
                 self.assertEqual(releasefence.json_text(first), releasefence.json_text(releasefence.scan_repository(root)))
                 rules = {item["rule"] for item in first["findings"]}
