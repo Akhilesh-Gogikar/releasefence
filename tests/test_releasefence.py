@@ -122,6 +122,48 @@ class ReleaseFenceTests(unittest.TestCase):
                 self.assertIn("special-file", rules)
             self.assertEqual("amber", report["status"])
 
+    def test_coverage_totals_separate_inspected_sampled_and_skipped(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.make_green(root)
+            (root / "notes.txt").write_text("synthetic\n", encoding="utf-8")
+            (root / "binary.dat").write_bytes(b"\x00abc")
+            (root / "invalid.txt").write_bytes(b"\xff\xfe")
+            (root / "large.txt").write_bytes(b"x" * (releasefence.TEXT_LIMIT + 1))
+            if hasattr(os, "mkfifo"):
+                os.mkfifo(root / "events.pipe")
+            blocked = root / "blocked.txt"
+            blocked.write_bytes(b"secret")
+            original = releasefence._inspect_regular_file
+
+            def inspect(path, **kwargs):
+                if Path(path).name == blocked.name:
+                    raise PermissionError("synthetic")
+                return original(path, **kwargs)
+
+            with mock.patch.object(releasefence, "_inspect_regular_file", side_effect=inspect):
+                report = releasefence.scan_repository(root)
+
+            coverage = report["coverage"]
+            inspected_bytes = sum(
+                (root / name).stat().st_size for name in ("LICENSE", "package.json", "PROVENANCE.md", "notes.txt")
+            )
+            self.assertEqual({"files": 4, "bytes": inspected_bytes}, coverage["inspected"])
+            self.assertEqual({"files": 1, "bytes": releasefence.TEXT_LIMIT + 1}, coverage["sampled"])
+            skipped_files = 4 if hasattr(os, "mkfifo") else 3
+            self.assertEqual({"files": skipped_files, "bytes": 12}, coverage["skipped"])
+            reasons = coverage["reasons"]
+            self.assertEqual(sorted(reasons), list(reasons))
+            self.assertEqual({"files": 2, "bytes": 6}, reasons["binary-file"])
+            self.assertEqual({"files": 1, "bytes": 6}, reasons["scan-incomplete"])
+            if hasattr(os, "mkfifo"):
+                self.assertEqual({"files": 1, "bytes": 0}, reasons["special-file"])
+            self.assertNotIn(str(root), releasefence.json_text(report))
+            rendered = releasefence.html_text(report)
+            for label in ("Coverage", "Inspected", "Sampled", "Skipped"):
+                self.assertIn(label, rendered)
+            self.assertIn('aria-label="Coverage reasons"', rendered)
+
     def test_directory_symlink_and_worktree_metadata_are_visible(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

@@ -6,7 +6,8 @@ ReleaseFence is one Python module with no runtime dependencies. The design favor
 2. `scan_repository()` walks a stable local tree without following symlinked files or directories and builds a bounded UTF-8 text cache from regular files only.
 3. Independent checks append immutable `Finding` values. Each finding contains a rule, severity, local fact, evidence, and remediation.
 4. Findings are sorted by a fixed key. Stable IDs hash rule/path/line/evidence, never the absolute checkout path.
-5. `json_text()` and `html_text()` render the same report. Atomic writes avoid partial artifacts.
+5. `_coverage()` aggregates the final scan caches into inspected (fully decoded text), sampled (over the 2 MB text limit), and skipped (binary, special, unreadable, or otherwise uninspected) file and byte totals. Reasons use existing rule identifiers and contain no paths.
+6. `json_text()` and `html_text()` render the same report. Atomic writes avoid partial artifacts.
 
 On systems with descriptor-relative filesystem APIs, traversal opens each file relative to the already-open parent directory and refuses a symlink in the final component. The portable fallback rejects symlinks and Windows reparse points and validates the opened handle against the in-root lexical path before reading. Both paths verify directory and file metadata after collection; concurrent changes become `scan-incomplete` errors rather than an apparently clean report.
 

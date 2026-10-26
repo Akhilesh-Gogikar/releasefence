@@ -372,6 +372,48 @@ def _verify_stable_tree(
             discard(path, descendants=False)
 
 
+def _entry_size(root: Path, relative: str) -> int:
+    try:
+        metadata = (root / relative).lstat()
+    except OSError:
+        return 0
+    return metadata.st_size if stat.S_ISREG(metadata.st_mode) else 0
+
+
+def _coverage(root: Path, files: list[Path], texts: dict[Path, str], sizes: dict[Path, int], samples: dict[Path, bytes], findings: list[Finding]) -> dict[str, object]:
+    totals = {name: {"files": 0, "bytes": 0} for name in ("inspected", "sampled", "skipped")}
+    reasons: dict[str, dict[str, int]] = {}
+
+    def add(category: str, reason: str | None, size: int) -> None:
+        totals[category]["files"] += 1
+        totals[category]["bytes"] += size
+        if reason is not None:
+            bucket = reasons.setdefault(reason, {"files": 0, "bytes": 0})
+            bucket["files"] += 1
+            bucket["bytes"] += size
+
+    for path in sorted(files, key=lambda item: _rel(root, item)):
+        size = sizes[path]
+        if size > TEXT_LIMIT:
+            add("sampled", "large-file", size)
+        elif b"\0" in samples[path] or path not in texts:
+            add("skipped", "binary-file", size)
+        else:
+            add("inspected", None, size)
+
+    seen: set[tuple[str, str]] = set()
+    for finding in findings:
+        if finding.rule not in {"scan-incomplete", "special-file", "symlink-lineage"}:
+            continue
+        key = (finding.rule, finding.path)
+        if key in seen:
+            continue
+        seen.add(key)
+        add("skipped", finding.rule, _entry_size(root, finding.path))
+
+    return {**totals, "reasons": {reason: reasons[reason] for reason in sorted(reasons)}}
+
+
 def _host(raw_url: str) -> str:
     if "://" not in raw_url and "@" in raw_url:
         return raw_url.split("@", 1)[1].split(":", 1)[0].lower()
@@ -605,6 +647,7 @@ def scan_repository(root: Path) -> dict[str, object]:
         "repository": ".",
         "status": status,
         "summary": {"total": len(findings), **counts},
+        "coverage": _coverage(root, files, texts, sizes, samples, findings),
         "findings": [finding.as_dict() for finding in findings],
     }
 
@@ -629,13 +672,27 @@ def html_text(report: dict[str, object]) -> str:
             f'<p>{html.escape(str(finding["remediation"]))}</p></article>'
         )
     summary = report["summary"]
+    coverage = report["coverage"]
+    coverage_rows = "".join(
+        f'<div><dt>{label}</dt><dd>{coverage[key]["files"]} files · {coverage[key]["bytes"]} bytes</dd></div>'
+        for key, label in (("inspected", "Inspected"), ("sampled", "Sampled"), ("skipped", "Skipped"))
+    )
+    reason_items = "".join(
+        f'<li><code>{html.escape(str(reason))}</code>: {values["files"]} files · {values["bytes"]} bytes</li>'
+        for reason, values in coverage["reasons"].items()
+    )
+    reason_list = f'<h3>Reasons</h3><ul aria-label="Coverage reasons">{reason_items}</ul>' if reason_items else "<p>No sampled or skipped entries.</p>"
+    coverage_html = (
+        '<section aria-labelledby="coverage-heading"><h2 id="coverage-heading">Coverage</h2>'
+        f'<dl>{coverage_rows}</dl>{reason_list}</section>'
+    )
     return """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ReleaseFence report</title><style>
 body{font:16px/1.5 system-ui,sans-serif;max-width:960px;margin:2rem auto;padding:0 1rem;color:#17202a;background:#fff}code,pre{background:#f1f3f4;padding:.2rem .35rem;overflow:auto}.finding{border-left:.45rem solid #59636e;padding:.5rem 1rem;margin:1rem 0;background:#fafafa}.critical{border-color:#7b241c}.error{border-color:#a93226}.warning{border-color:#8a6d00}.info{border-color:#1f618d}a{color:#174f78}.skip-link{position:absolute;left:-10000px;top:auto}.skip-link:focus{left:1rem;top:1rem;background:#fff;padding:.5rem;z-index:1}a:focus-visible{outline:3px solid #6c3483;outline-offset:3px}@media(forced-colors:active){.finding{border-left-color:CanvasText}}
 </style></head><body><a class="skip-link" href="#content">Skip to report content</a><header><h1>ReleaseFence report</h1></header><main id="content">
 <p role="status" aria-label="Overall release status"><strong>Status: """ + html.escape(str(report["status"]).upper()) + f"""</strong></p>
-<p>{summary['critical']} critical · {summary['error']} error · {summary['warning']} warning · {summary['info']} info</p>
+<p>{summary['critical']} critical · {summary['error']} error · {summary['warning']} warning · {summary['info']} info</p>""" + coverage_html + """
 <p>This is an explainable local preflight, not legal advice or legal clearance.</p>
 <section aria-labelledby="findings-heading"><h2 id="findings-heading">Findings</h2>""" + ("".join(rows) if rows else "<p>No boundary findings.</p>") + """</section></main></body></html>
 """
